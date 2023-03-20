@@ -1,30 +1,57 @@
 % !TeX root = ../main.tex
 
 \ustcsetup{
-  keywords  = {学位论文, 摘要, 关键词},
-  keywords* = {dissertation, abstract, keywords},
+  keywords  = {分布式对象存储, 管理系统, AliIO},
+  keywords* = {Distributed Object Storage, management system, AliIO},
 }
 
 \begin{abstract}
-  摘要分中文和英文两种，中文在前，英文在后，博士论文中文摘要一般 800～1500 个汉字，硕士论文中文摘要一般 500～1000 个汉字。
-  英文摘要的篇幅参照中文摘要。
 
-  关键词另起一行并隔行排列于摘要下方，左顶格，中文关键词间空一字或用分号“，”隔开，英文关键词之间用逗号“,”或分号“;”隔开。
+  近年来，自动驾驶、大数据、人工智能等技术都是研究热点，随之而来的是数据的爆炸式增长。在此之前，数据都是采用集中存储的
+  方式，这种方式起步较早，具有技术成熟、架构简单、稳定性好等特点，可以很好的支持高IOPS、低延时和数据强一致性。此外，随着近年来全闪存阵列存储的迅速发展，IOPS的性能与机械硬盘存储相比提高了100倍以上，这有效解决了IOPS的性能痛点。传统存储的系统架构的优点在于I/O路径短和访问延迟小，但其扩展能力有限，无法很好的
+  支撑高并发的访问性能。随着大数据时代的来临，集中存储数据方式的增长空间逐渐受到限制，系统的可靠性和安全性方面也面临着
+  巨大的挑战，不能很好的服务于大规模存储应用。
 
-  中文摘要是论文内容的总结概括，应简要说明论文的研究目的、基本研究内容、研究方法或过程、结果和结论，突出论文的创新之处。
-  摘要应具有独立性和自明性，即不用阅读全文，就能获得论文必要的信息。
-  摘要中不宜使用公式、图表，不引用文献。
+  本文详尽的阐述了一个基于阿里云自研 AliIO 构建的分布式对象存储管理
+  系统的设计与实现，在提供的 SDK 的基础上基于微服务架构设计一个智能化的
+  管理平台。本系统满足了个人用户和企业用户使用分布式对象存储的各项需求，
+  包括文件的上传与下载，用户访问权限控制，用户的执行策略控制，bucket 的管
+  理和服务器的管理等。本系统不仅能高效快速的执行文件的上传下载任务，实
+  现在高并发环境下稳定运行，还易于扩展，将其他与存储有关的业务集成进本系
+  统。
 
-  中文关键词是为了文献标引工作从论文中选取出来用以表示全文主题内容信息的单词和术语，一般 3～8 个词，要求能够准确概括论文的核心内容。
+  % 摘要分中文和英文两种，中文在前，英文在后，博士论文中文摘要一般 800～1500 个汉字，硕士论文中文摘要一般 500～1000 个汉字。
+  % 英文摘要的篇幅参照中文摘要。
+
+  % 关键词另起一行并隔行排列于摘要下方，左顶格，中文关键词间空一字或用分号“，”隔开，英文关键词之间用逗号“,”或分号“;”隔开。
+
+  % 中文摘要是论文内容的总结概括，应简要说明论文的研究目的、基本研究内容、研究方法或过程、结果和结论，突出论文的创新之处。
+  % 摘要应具有独立性和自明性，即不用阅读全文，就能获得论文必要的信息。
+  % 摘要中不宜使用公式、图表，不引用文献。
+
+  % 中文关键词是为了文献标引工作从论文中选取出来用以表示全文主题内容信息的单词和术语，一般 3～8 个词，要求能够准确概括论文的核心内容。
 \end{abstract}
 
 \begin{abstract*}
-  This is a sample document of USTC thesis \LaTeX{} template for bachelor,
-  master and doctor. The template is created by zepinglee and seisman, which
-  orignate from the template created by ywg. The template meets the
-  equirements of USTC thesis writing standards.
+  % This is a sample document of USTC thesis \LaTeX{} template for bachelor,
+  % master and doctor. The template is created by zepinglee and seisman, which
+  % orignate from the template created by ywg. The template meets the
+  % equirements of USTC thesis writing standards.
 
-  This document will show the usage of basic commands provided by \LaTeX{} and
-  some features provided by the template. For more information, please refer to
-  the template document ustcthesis.pdf.
+  % This document will show the usage of basic commands provided by \LaTeX{} and
+  % some features provided by the template. For more information, please refer to
+  % the template document ustcthesis.pdf.
+
+  In recent years, technologies such as autonomous driving, big data, and artificial intelligence have all been research hotspots, followed by the explosive growth of data. Until now, data was stored centrally
+  This method started early and has the characteristics of mature technology, simple architecture and good stability, and can well support high IOPS, low latency and strong data consistency. In addition, with the rapid development of all-flash array storage in recent years, the performance of IOPS has been improved by more than 100 times compared with that of mechanical hard disk storage, which effectively solves the performance pain point of IOPS. The advantages of the traditional storage system architecture are that the I/O path is short and the access delay is small, but its scalability is limited and cannot be well
+  Support high concurrent access performance. With the advent of the era of big data, the growth space of centralized data storage is gradually limited, and the reliability and security of the system are also faced with challenges.
+  It is a huge challenge and cannot serve large-scale storage applications well.
+
+  This article elaborates a distributed object storage management based on Alibaba Cloud's self-developed AliIO.
+  The design and implementation of the system, on the basis of the provided SDK, based on the micro-service architecture design an intelligent
+  management platform. This system meets the needs of individual users and enterprise users to use distributed object storage,
+  Including file upload and download, user access permission control, user execution policy control, bucket management
+  management and server management. This system can not only perform file upload and download tasks efficiently and quickly, but also
+  Now it runs stably in a high-concurrency environment, and it is easy to expand, integrating other storage-related services into the system
+  system.
 \end{abstract*}
