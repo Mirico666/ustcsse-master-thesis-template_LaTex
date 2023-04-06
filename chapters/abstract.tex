@@ -1,24 +1,28 @@
 % !TeX root = ../main.tex
 
 \ustcsetup{
-  keywords  = {分布式对象存储, 管理系统, AliIO},
-  keywords* = {Distributed Object Storage, management system, AliIO},
+  keywords  = {分布式对象存储, 管控平台, AliIO},
+  keywords* = {Distributed Object Storage, Management and Control Platform, AliIO},
 }
 
 \begin{abstract}
 
-  近年来，随着自动驾驶、大数据、人工智能等技术的高速发展，随之而来的是数据的爆炸式增长。在此之前，数据都是采用集中存储的
-  方式，这种方式起步较早，具有技术成熟、架构简单、稳定性好等特点，可以很好的支持高IOPS、低延时和数据强一致性。此外，随着近年来全闪存阵列存储的迅速发展，IOPS的性能与机械硬盘存储相比提高了100倍以上，这有效解决了IOPS的性能痛点。传统存储的系统架构的优点在于I/O路径短和访问延迟小，但其扩展能力有限，无法很好的
-  支撑高并发的访问性能。随着大数据时代的来临，集中存储数据方式的增长空间逐渐受到限制，系统的可靠性和安全性方面也面临着
-  巨大的挑战，不能很好的服务于大规模存储应用。
 
-  本文详尽的阐述了一个基于阿里云自研 AliIO 构建的分布式对象存储管理
-  系统的设计与实现，在提供的 SDK 的基础上基于微服务架构设计一个智能化的
-  管理平台。本系统满足了个人用户和企业用户使用分布式对象存储的各项需求，
-  包括文件的上传与下载，用户访问权限控制，用户的执行策略控制，bucket 的管
-  理和服务器的管理等。本系统不仅能高效快速的执行文件的上传下载任务，实
-  现在高并发环境下稳定运行，还易于扩展，将其他与存储有关的业务集成进本系
-  统。
+
+  随着云计算和大数据的快速发展，分布式对象存储技术已成为一种主流的数据存储方式。然而，由于分布式对象存储系统的规模庞大、复杂度高，管理和维护变得异常困难。
+  因此，为了有效地管理和维护分布式对象存储系统，各大公司开发了相应的分布式对象存储系统管控平台。尽管这些平台在不断迭代的过程中具备了不少优势，但同时也存在着
+  一些明显的不足，如功能不够完善、安全性差、操作复杂等，这些问题无疑增加了用户的操作难度和平台的安全风险。因此，基于解决现有系统缺陷的前提下，结合阿里自研
+  分布式对象存储系统AliIO的定制化需求，开发一个功能完善、稳定高效、操作简单的分布式对象存储系统管控平台是非常有必要的。
+
+  鉴于上述背景和需求，本文旨在研发一种基于分布式对象存储系统AliIO的管控平台，以有效管理和维护该系统。该平台采用微服务架构，包含五个核心功能模块：注册认证、权限控
+  制、策略控制、文件存取和系统监控。前端采用Vue.js框架，后端采用Spring Boot框架和MySQL数据库，以确保系统的高效性。在认证模块方面，平台利用OAuth2和JWT实现安全认
+  证和授权机制。在权限控制模块中，采用SpringCloud Gateway作为API网关，对用户请求进行鉴权控制。在系统监控模块中，通过Prometheus监控工具采集和存储对象存储服务器相
+  关状态数据，并通过Grafana数据可视化工具展示监控数据。此外，本文从功能测试、性能测试、安全性测试和易用性测试四个方面对该管控平台进行全面细致的测试，测试结果表明
+  该系统能够满足正常的功能需求，在性能、安全性和易用性方面也达到了良好的效果。综上所述，该管控平台的研发取得了理想的结果，达到了设计目标。
+
+  本文研究和实现的分布式对象存储系统管控平台能够有效地管理和控制分布式对象存储系统，该平台实现了对权限控制、对象存储、用户和安全等方面的全面管理，为分布式对象存储
+  系统的管理和控制提供了一种有效的解决方案。在未来的工作中，将继续对该管控平台进行优化和改进，提高平台的性能和效率，以满足更多场景下的需求。
+
 
   % 摘要分中文和英文两种，中文在前，英文在后，博士论文中文摘要一般 800～1500 个汉字，硕士论文中文摘要一般 500～1000 个汉字。
   % 英文摘要的篇幅参照中文摘要。
@@ -42,16 +46,30 @@
   % some features provided by the template. For more information, please refer to
   % the template document ustcthesis.pdf.
 
-  In recent years, technologies such as autonomous driving, big data, and artificial intelligence have all been research hotspots, followed by the explosive growth of data. Until now, data was stored centrally
-  This method started early and has the characteristics of mature technology, simple architecture and good stability, and can well support high IOPS, low latency and strong data consistency. In addition, with the rapid development of all-flash array storage in recent years, the performance of IOPS has been improved by more than 100 times compared with that of mechanical hard disk storage, which effectively solves the performance pain point of IOPS. The advantages of the traditional storage system architecture are that the I/O path is short and the access delay is small, but its scalability is limited and cannot be well
-  Support high concurrent access performance. With the advent of the era of big data, the growth space of centralized data storage is gradually limited, and the reliability and security of the system are also faced with challenges.
-  It is a huge challenge and cannot serve large-scale storage applications well.
+  With the rapid development of cloud computing and big data, distributed object storage technology has become a mainstream data storage method. 
+  However, due to the large scale and high complexity of the distributed object storage system, management and maintenance become extremely 
+  difficult. Therefore, in order to effectively manage and maintain distributed object storage systems, major companies have developed 
+  corresponding distributed object storage system management and control platforms. Although these platforms have many advantages in the 
+  process of continuous iteration, there are also some obvious shortcomings, such as insufficient functions, poor security, and complicated 
+  operations. These problems undoubtedly increase the difficulty of user operations and the security risks of the platform. . Therefore, based on 
+  the premise of solving the defects of the existing system, combined with the customization requirements of AliIO, Ali's self-developed distributed
+  object storage system, it is very necessary to develop a distributed object storage system management and control platform with complete 
+  functions, stable and efficient, and simple operation.
 
-  This article elaborates a distributed object storage management based on Alibaba Cloud's self-developed AliIO.
-  The design and implementation of the system, on the basis of the provided SDK, based on the micro-service architecture design an intelligent
-  management platform. This system meets the needs of individual users and enterprise users to use distributed object storage,
-  Including file upload and download, user access permission control, user execution policy control, bucket management
-  management and server management. This system can not only perform file upload and download tasks efficiently and quickly, but also
-  Now it runs stably in a high-concurrency environment, and it is easy to expand, integrating other storage-related services into the system
-  system.
+  In view of the above background and requirements, this paper aims to develop a management and control platform based on the distributed object 
+  storage system AliIO to effectively manage and maintain the system. The platform adopts micro-service architecture and includes five core 
+  functional modules: registration authentication, authority control, policy control, file access and system monitoring. The front-end adopts 
+  the Vue.js framework, and the back-end adopts the Spring Boot framework and MySQL database to ensure the efficiency of the system. In terms 
+  of authentication modules, the platform uses OAuth2 and JWT to implement security authentication and authorization mechanisms. In the authority 
+  control module, SpringCloud Gateway is used as the API gateway to perform authentication control on user requests. In the system monitoring 
+  module, the Prometheus monitoring tool is used to collect and store the relevant status data of the object storage server, and the monitoring 
+  data is displayed through the Grafana data visualization tool. In addition, this paper conducts a comprehensive and detailed test on the 
+  management and control platform from four aspects: function test, performance test, security test and usability test. The test results show that 
+  the system can meet the normal functional requirements. Good results have also been achieved in terms of usability. To sum up, the research and 
+  development of the management and control platform has achieved ideal results and achieved the design goal.
+
+  The distributed object storage system management and control platform researched and implemented in this paper can effectively manage and 
+  control the distributed object storage system. management and control provides an effective solution. In the future work, we will continue 
+  to optimize and improve the management and control platform to improve the performance and efficiency of the platform to meet the needs of 
+  more scenarios.
 \end{abstract*}
