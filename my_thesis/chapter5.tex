@@ -1,4 +1,4 @@
-\chapter{详细设计与实现}
+\chapter{分布式对象存储系统管控平台详细设计与实现}
 
 本章将深入介绍分布式对象存储系统管控平台的详细设计，根据微服务划分的功能模块，对每一模块的设计和实现过程进行细致的梳理，最后，针对本系统涉及到的数据库表
 进行了全面的介绍。
@@ -516,6 +516,7 @@ AlarmService调用相关方法给通知人发送信息或邮件，并返回告�
         \hline
     
 	\end{longtable}}}
+    \vspace{-1cm}
 \end{center}
 
 
@@ -542,6 +543,7 @@ AlarmService调用相关方法给通知人发送信息或邮件，并返回告�
         \hline
     
 	\end{longtable}}}
+    \vspace{-1cm}
 \end{center}
 
 （3）存储桶信息表
@@ -559,7 +561,7 @@ AlarmService调用相关方法给通知人发送信息或邮件，并返回告�
         \hline
         \endfirsthead
       
-        \caption{(续表)}\\
+        \caption{存储桶信息表（续表）}\\
         \hline
         \bf{序号} & \bf{字段名}  & \bf{类型} & \bf{可否为空} & \bf{是否主键}& \bf{字段说明}\\
         \hline
@@ -578,6 +580,7 @@ AlarmService调用相关方法给通知人发送信息或邮件，并返回告�
         5 & obj\_nums & INT32 & N & N & 对象数量\\
         \hline
 	\end{longtable}}}
+    \vspace{-1cm}
 \end{center}
 
 （4）用户策略关联表
@@ -611,6 +614,7 @@ AlarmService调用相关方法给通知人发送信息或邮件，并返回告�
         \hline
     
 	\end{longtable}}}
+    \vspace{-1cm}
 \end{center}
 
 （5）服务器状态信息表
@@ -647,6 +651,7 @@ AlarmService调用相关方法给通知人发送信息或邮件，并返回告�
         6 & connection & VARCHAR(64) & N & N & 连接状态\\
         \hline
 	\end{longtable}}}
+    \vspace{-1cm}
 \end{center}
 
 （6）事件信息表
@@ -685,6 +690,7 @@ AlarmService调用相关方法给通知人发送信息或邮件，并返回告�
         7 & download & VARCHAR(64) & N & N & 下载数据量\\
         \hline
 	\end{longtable}}}
+    \vspace{-1cm}
 \end{center}
 
 (7)告警信息表
@@ -723,6 +729,7 @@ AlarmService调用相关方法给通知人发送信息或邮件，并返回告�
         7 & result & VARCHAR(64) & N & N & 处理结果\\
         \hline
 	\end{longtable}}}
+    \vspace{-1cm}
 \end{center}
 
 
