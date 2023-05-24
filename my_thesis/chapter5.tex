@@ -65,7 +65,7 @@ AuthenticationManager中有一个属性类UserDetailsService和一个方法authe
 \end{figure}
 
 
-根据类图我们可以进一步绘制出该子模块的UML时序图，如图\ref{fig:身份认证子模块UML时序图}所示。当用户点击登录按钮时，LoginFilter获取到用户的用户名和密码，然后在AuthenticationManager
+根据类图我们可以进一步绘制出该子模块的UML时序图，如图\ref{fig:用户登录子模块UML时序图}所示。当用户点击登录按钮时，LoginFilter获取到用户的用户名和密码，然后在AuthenticationManager
 中对用户名和密码进行验证，在验证前，需要先从调用UserDetailsService中的方法去获取用户信息，通过UserMapper去数据库取到所有用户名和密码，将密码进行编码并进行逐一比对，将信息封装
 到UserDetails中，返回给AuthenticationManager，AuthenticationManager对密码进行验证，验证完成后，向LoginFilter返回Authentication。至此，用户的用户名和密码均验证成功，用户
 成功登录。
@@ -131,7 +131,7 @@ getUserInfoFromToken，它将token作为参数用来得到用户信息。
 %     \note{注：图注的内容不宜放到图题中。}
 \end{figure}
 
-根据类图我们可以进一步绘制出该子模块的UML时序图，如图\ref{fig:角色管理子模块UML时序图}所示。当系统管理员在权限管理页面进行创建、删除、修改、查看权限等操作时，这些请求会从前端发送
+根据类图我们可以进一步绘制出该子模块的UML时序图，如图\ref{fig:权限管理子模块UML时序图}所示。当系统管理员在权限管理页面进行创建、删除、修改、查看权限等操作时，这些请求会从前端发送
 到控制器PermissionController，PermissionController首先获取到token，将token传给TokenValidAuthentication进行验证，验证通过后，将对系统中的权限进行相关操作，通过调用
 PermissionService接口中的方法来完成这些步骤。PermissionService会调用PermissionMapper中的具体接口去对数据库中的权限信息进行增删改查的操作。完成后，系统会将完成状态信息或返
 数据返回到前端页面进行显示。
@@ -226,10 +226,20 @@ IdentityServiceImpl被实现，该实现类中含有一个属性类IdentityMappe
 
 根据类图我们可以进一步绘制出该子模块的UML时序图，如图\ref{fig:用户管理子模块UML时序图}所示。当管理员在进行用户的创建、删除、修改和查询等操作时，这里以创建用户为例。
 IdentityController收到创建用户的操作请求后，首先获取新增用户的信息，然后调用IdentityService中的insertUser方法将用户信息插入系统，IdentityService进一步调用IdentityMapper
-的insertUser方法将用户信息存入数据库中。同时，IdentityService还会调用AliIOClient中的createUser方法在存储服务器中创建同名的系统用户。最后，返回完成状态，并在前端页面上进行
-显示。
+的insertUser方法将用户信息存入数据库中。同时，IdentityService还会调用AliIOClient中的createUser方法在存储服务器中创建同名的系统用户。
+然后，存储服务器会将完成状态返回给IdentityService类，IdentityService类继续将完成状态返回给IdentityController，最后显示在前端页面。
+
 
 （2）策略管理子模块
+
+
+
+策略管理子模块的UML类图如图\ref{fig:策略管理子模块UML类图}所示。该子模块主要包含六个类，分别是PolicyController、PolicyService、PolicyServiceImpl、PolicyMapper、 
+AliioClient和PolicyVo。其中，PolicyController中含有一个属性类PolicyService和四个方法，分别是getPolicyList、updatePolicy、insertPolicy和deletePolicy，
+它们接收一个Policy类的参数PolicyVo，PolicyVo中含有策略有关的信息，如policyId、policyName、state和operateList，即策略编号、策略名称、状态和操作列表。
+PolicyService中有上述的同名方法，这些方法在其实现类
+PolicyServiceImpl被实现，该实现类中含有一个属性类PolicyMapper，该接口类也含有上述同样的方法。AliioClient类中也同样含有这些方法，该类是由对象存储系统AliIO提供的API，
+主要负责对存储服务器进行相关操作。
 
 \begin{figure}[htb]
     \centering
@@ -238,13 +248,6 @@ IdentityController收到创建用户的操作请求后，首先获取新增用�
     \label{fig:策略管理子模块UML类图}
 %     \note{注：图注的内容不宜放到图题中。}
 \end{figure}
-
-策略管理子模块的UML类图如图\ref{fig:策略管理子模块UML类图}所示。该子模块主要包含六个类，分别是PolicyController、PolicyService、PolicyServiceImpl、PolicyMapper、 
-AliioClient和PolicyVo。其中，PolicyController中含有一个属性类PolicyService和四个方法，分别是getPolicyList、updatePolicy、insertPolicy和deletePolicy，
-它们接收一个Policy类的参数PolicyVo，PolicyVo中含有策略有关的信息，如policyId、policyName、state和operateList，即策略编号、策略名称、状态和操作列表。
-PolicyService中有上述的同名方法，这些方法在其实现类
-PolicyServiceImpl被实现，该实现类中含有一个属性类PolicyMapper，该接口类也含有上述同样的方法。AliioClient类中也同样含有这些方法，该类是由对象存储系统AliIO提供的API，
-主要负责对存储服务器进行相关操作。
 
 \begin{figure}[htb]
     \centering
@@ -451,7 +454,7 @@ deleteEvent和deleteAllEvents。它们的返回值中有EventResponse类，该�
 
 根据类图我们可以进一步绘制出该子模块的UML时序图，如图\ref{fig:事件跟踪子模块UML时序图}所示。当系统管理员进行事件跟踪有关操作时，这里以事件分析为例。用户的事件分析
 请求传到控制器EventsController，EventsController调用EventsService中的getEventsList方法，然后进一步调用EventsMapper中的getEventsList方法，将事件信息从数据库中提取
-出来。EventsService接收到事件信息后，将其倒入SparkService中进行分析，SparkService分析结束后将分析结果返回给EventsService，EventsService又将事件分析报告返回给
+出来。EventsService接收到事件信息后，将其导入SparkService中进行分析，SparkService分析结束后将分析结果返回给EventsService，EventsService又将事件分析报告返回给
 EventsController，最后在前端页面上进行显示。
 
 （3）告警通知子模块
@@ -489,14 +492,16 @@ AlarmService调用相关方法给通知人发送信息或邮件，并返回告�
 % 根据分布式对象存储管理系统的需求分析和实体-关系图（E-R 图） ，对系统所需存储的数据进行分析和整理，设计相应的数据表结构。由于系统结构比较复杂，含有较多的数据项，
 % 这里只对部分数据表的重要字段信息进行展示。
 
-根据分布式对象存储系统管控平台的需求分析和实体-关系图（E-R 图），对系统所需要存储的数据进行分析和整理，结合不同功能模块的划分，设计了对应的数据表结构。由于系统的功能模块较多，
-涉及到的数据表数目以及数据表的数据项也比较多，因此，在这里只展示重要的数据表以及数据表字段。
+根据分布式对象存储系统管控平台的需求分析和实体-关系图（E-R 图），对系统所需要存储的数据进行分析和整理，结合不同功能模块的划分，设计了对应的数据表结构。
+
+% 由于系统的功能模块较多，
+% 涉及到的数据表数目以及数据表的数据项也比较多，因此，在这里只展示重要的数据表以及数据表字段。
 
 
 （1） 用户信息表
 
 用户信息表主要是用于保存系统用户相关的信息。该表字段中主要包括了用户编号、账号、密码和邮箱，主要在注册认证模块和用户管理模块中使用，当用户注册时，会将新用户的注册信息存入该表
-中，值得注意的是，密码在存入数据库之前会进行hash处理，故存入数据库的密码不再是原值。用户信息表的具体表结构如表\ref{用户信息表}所示。
+中。用户信息表的具体表结构如表\ref{用户信息表}所示。
 
 \begin{center}
     \renewcommand\arraystretch{1.5}{
@@ -560,8 +565,8 @@ AlarmService调用相关方法给通知人发送信息或邮件，并返回告�
         \bf{序号} & \bf{字段名}  & \bf{类型} & \bf{可否为空} & \bf{是否主键}& \bf{字段说明}\\
         \hline
         \endfirsthead
-      
-        \caption{存储桶信息表（续表）}\\
+        \multicolumn{6}{r}{ \bf{续表} } \\
+        % \caption{（续）}\\
         \hline
         \bf{序号} & \bf{字段名}  & \bf{类型} & \bf{可否为空} & \bf{是否主键}& \bf{字段说明}\\
         \hline
