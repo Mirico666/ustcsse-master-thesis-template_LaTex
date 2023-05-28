@@ -2427,7 +2427,7 @@
     % 两端对齐，页码右对齐，序号与题名间空一字。
     % Word 模板中实际是行距 20 磅，段前 0 磅。
   \titlecontents{subsection}
-    [2\ccwd]{\fangsong\fontsize{12bp}{20bp}\selectfont}
+    [2\ccwd]{\fontsize{12bp}{20bp}\selectfont}
     {\contentspush{\thecontentslabel\hspace{\ccwd}}}{}
     {\ustc@leaders\contentspage}
     %
